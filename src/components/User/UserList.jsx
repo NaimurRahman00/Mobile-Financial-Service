@@ -4,6 +4,7 @@ import { getUsers } from '../../services/api';
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState('User'); // Default role, should be fetched from authentication state
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,7 +33,7 @@ const UserList = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Mobile Number</th>
-              <th>Status</th>
+              {userRole === 'Admin' && <th>Status</th>} {/* Show only for Admin */}
             </tr>
           </thead>
           <tbody>
@@ -41,7 +42,7 @@ const UserList = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.mobileNumber}</td>
-                <td>{user.status}</td>
+                {userRole === 'Admin' && <td>{user.status}</td>} {/* Show only for Admin */}
               </tr>
             ))}
           </tbody>
