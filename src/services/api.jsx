@@ -1,10 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = "http://localhost:3001";
 
-const register = (userData) => {
-  return axios.post(`${API_URL}/auth/register`, userData);
+const register = async (userData) => {
+  const response = await axios.post('http://localhost:3001/users', userData);
+  return response.data;
 };
+
+// const { mutateAsync } = useMutation({
+//   mutationFn: async (userData) => {
+//     await axios.post(`http://localhost:3001/users`, userData);
+//   },
+//   onSuccess: () => {
+//     Navigate("/");
+//     // toast.success("Job posted successfully!");
+//   },
+// });
 
 const login = (credentials) => {
   return axios.post(`${API_URL}/auth/login`, credentials);
@@ -14,8 +25,12 @@ const getUsers = () => {
   return axios.get(`${API_URL}/users`);
 };
 
-const getUserById = (userId) => {
-  return axios.get(`${API_URL}/users/${userId}`);
+const getUserByEmail = (userEmail) => {
+  try {
+    return axios.get(`${API_URL}/users/${userEmail}`);
+  } catch {
+    console.log('user not found')
+  }
 };
 
 const updateUser = (userId, userData) => {
@@ -46,11 +61,11 @@ export {
   register,
   login,
   getUsers,
-  getUserById,
+  getUserByEmail,
   updateUser,
   sendMoney,
   cashOut,
   cashIn,
   getBalance,
-  getTransactionHistory
+  getTransactionHistory,
 };
