@@ -6,6 +6,7 @@ import UserList from "./components/User/UserList";
 import RegisterForm from "./components/Auth/RegisterForm";
 import SendMoneyForm from "./components/Transaction/SendMoneyForm";
 import { getUsers } from "./services/api";
+import Login from "./login/Login";
 
 const App = () => {
   const fetchUsers = async () => {
@@ -24,6 +25,7 @@ const App = () => {
   const router = createBrowserRouter([
     { path: "/", element: <Dashboard /> },
     { path: "/register", element: <RegisterForm /> },
+    { path: "/login", element: <Login /> },
     { path: "/users", element: <UserList /> },
     { path: "/send-money", element: <SendMoneyForm /> },
   ]);

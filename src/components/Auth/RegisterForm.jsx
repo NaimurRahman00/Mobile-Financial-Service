@@ -31,7 +31,7 @@ const RegisterForm = () => {
       queryClient.invalidateQueries("users"); // Adjust based on your query keys
       // Navigate to "/" route after successful registration
       window.location.href = "/"; // You can also use history.push('/') if using React Router
-    
+
       // Store email and mobile number in local storage
       localStorage.setItem("userEmail", email);
       localStorage.setItem("userMobileNumber", mobileNumber);
@@ -44,6 +44,12 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate PIN
+    if (!/^\d{5}$/.test(pin)) {
+      setMessage("PIN must be exactly 5 digits.");
+      return;
+    }
 
     // Check if user already exists
     try {
