@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout";
 import Dashboard from "./components/Dashboard";
 import UserList from "./components/User/UserList";
@@ -7,6 +7,7 @@ import RegisterForm from "./components/Auth/RegisterForm";
 import SendMoneyForm from "./components/Transaction/SendMoneyForm";
 import { getUsers } from "./services/api";
 import Login from "./login/Login";
+import PrivateRoute from "./Route/PrivateRoute";
 
 const App = () => {
   const fetchUsers = async () => {
@@ -23,7 +24,14 @@ const App = () => {
   }, []);
 
   const router = createBrowserRouter([
-    { path: "/", element: <Dashboard /> },
+    {
+      path: "/",
+      element: (
+        <PrivateRoute>
+          <Dashboard />
+        </PrivateRoute>
+      ),
+    },
     { path: "/register", element: <RegisterForm /> },
     { path: "/login", element: <Login /> },
     { path: "/users", element: <UserList /> },

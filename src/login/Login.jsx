@@ -1,30 +1,32 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
-  const [emailOrNumber, setEmailOrNumber] = useState('');
-  const [pin, setPin] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setemail] = useState("");
+  const [pin, setPin] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/login', {
-        emailOrNumber,
+      const response = await axios.post("http://localhost:3001/login", {
+        email,
         pin,
       });
 
       const { token } = response.data;
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
+      // Store email and mobile number in local storage
+      localStorage.setItem("userEmail", email);
+      // localStorage.setItem("userMobileNumber", mobileNumber);
 
-      setMessage('Login successful');
+      setMessage("Login successful");
       // Redirect or handle successful login action
-      window.location.href = '/dashboard'; // Replace with your desired redirect
-
+      window.location.href = "/"; // Replace with your desired redirect
     } catch (error) {
-      setMessage(error.response.data.message || 'Login failed');
-      console.error('Login failed', error);
+      setMessage(error.response.data.message || "Login failed");
+      console.error("Login failed", error);
     }
   };
 
@@ -34,21 +36,27 @@ const Login = () => {
         <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label htmlFor="emailOrNumber" className="block text-sm font-medium text-gray-700">
-              Email or Mobile Number
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
             </label>
             <input
               type="text"
-              id="emailOrNumber"
+              id="email"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-              placeholder="Enter your email or mobile number"
-              value={emailOrNumber}
-              onChange={(e) => setEmailOrNumber(e.target.value)}
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="pin" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="pin"
+              className="block text-sm font-medium text-gray-700"
+            >
               PIN
             </label>
             <input

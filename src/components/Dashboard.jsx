@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('userEmail');
+        navigate('/login');
+    };
+
     return (
         <div className="flex h-screen overflow-hidden">
             {/* Sidebar */}
@@ -13,7 +21,12 @@ function Dashboard() {
                         <a href="#" className="block py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white">Dashboard</a>
                         <a href="#" className="block py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white">Analytics</a>
                         <a href="#" className="block py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white">Settings</a>
-                        <a href="#" className="block py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white">Logout</a>
+                        <button
+                            onClick={handleLogout}
+                            className="block w-full text-left py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white active:bg-red-400"
+                        >
+                            Logout
+                        </button>
                     </nav>
                 </div>
             </div>
