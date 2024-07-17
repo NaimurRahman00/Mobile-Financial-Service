@@ -10,7 +10,6 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("user"); // Default role
   const [message, setMessage] = useState("");
-  const [existingUser, setExistingUser] = useState(null);
 
   const queryClient = useQueryClient();
 
@@ -32,6 +31,10 @@ const RegisterForm = () => {
       queryClient.invalidateQueries("users"); // Adjust based on your query keys
       // Navigate to "/" route after successful registration
       window.location.href = "/"; // You can also use history.push('/') if using React Router
+    
+      // Store email and mobile number in local storage
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userMobileNumber", mobileNumber);
     },
     onError: (error) => {
       setMessage(error.response.data.message || "Registration failed");
@@ -45,7 +48,6 @@ const RegisterForm = () => {
     // Check if user already exists
     try {
       const response = await getUserByEmail(email);
-      setExistingUser(response.data);
 
       if (response.data && response.data.email === email) {
         setMessage(
