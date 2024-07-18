@@ -1,75 +1,174 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { FiSearch, FiBell, FiUser } from "react-icons/fi";
+import { AiOutlineSetting } from "react-icons/ai";
+import { motion } from "framer-motion";
+import { MdOutlinePayment } from "react-icons/md";
+import { FaReceipt } from "react-icons/fa";
+import { IoCashOutline, IoLogOut } from "react-icons/io5";
+import { TbCoinTakaFilled } from "react-icons/tb";
 
-function Dashboard() {
-    const navigate = useNavigate();
+const Dashboard = () => {
+  const navigate = useNavigate();
+  const [balance, setBalance] = useState(200);
+  const [showBalance, setShowBalance] = useState(false);
 
-    const handleLogout = () => {
-        localStorage.removeItem('userEmail');
-        navigate('/login');
-    };
+  const handleShowBalance = () => {
+    setShowBalance(true);
+    setTimeout(() => {
+      setShowBalance(false);
+    }, 3000);
+  };
 
-    return (
-        <div className="flex h-screen overflow-hidden">
-            {/* Sidebar */}
-            <div className="bg-gray-800 w-64">
-                <div className="flex flex-col h-screen">
-                    <div className="bg-gray-900 p-4 flex items-center justify-center">
-                        <span className="text-white text-2xl font-semibold">Dashboard</span>
-                    </div>
-                    <nav className="mt-4 flex-1">
-                        <a href="#" className="block py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white">Dashboard</a>
-                        <a href="#" className="block py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white">Analytics</a>
-                        <a href="#" className="block py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white">Settings</a>
-                        <button
-                            onClick={handleLogout}
-                            className="block w-full text-left py-2 px-4 text-gray-200 hover:bg-gray-700 hover:text-white active:bg-red-400"
-                        >
-                            Logout
-                        </button>
-                    </nav>
-                </div>
-            </div>
+  const handleLogout = () => {
+    localStorage.removeItem("userEmail");
+    navigate("/login");
+  };
 
-            {/* Main content area */}
-            <div className="flex flex-col w-full">
-                {/* Navbar */}
-                <div className="bg-gray-900 p-4 flex justify-between items-center">
-                    <span className="text-white text-2xl font-semibold">Welcome, User!</span>
-                    <div>
-                        <button className="text-gray-200 hover:text-white focus:outline-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                {/* Main content */}
-                <main className="flex-grow p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {/* Widget 1 */}
-                        <div className="bg-white rounded-lg shadow-md p-4">
-                            <h2 className="text-xl font-semibold mb-4">Sales Summary</h2>
-                            <p>Insert Sales Chart Component here</p>
-                        </div>
-
-                        {/* Widget 2 */}
-                        <div className="bg-white rounded-lg shadow-md p-4">
-                            <h2 className="text-xl font-semibold mb-4">Recent Users</h2>
-                            <p>Insert User Table Component here</p>
-                        </div>
-
-                        {/* Widget 3 */}
-                        <div className="bg-white rounded-lg shadow-md p-4">
-                            <h2 className="text-xl font-semibold mb-4">Notifications</h2>
-                            <p>Insert Notifications Component here</p>
-                        </div>
-                    </div>
-                </main>
-            </div>
+  return (
+    <div className="flex h-screen bg-gray-100 font-sans">
+      {/* Sidebar */}
+      <motion.div
+        initial={{ x: -250 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-64 bg-gradient-to-t from-gray-800 to-gray-900 shadow-md"
+      >
+        <div className="p-4 border-b border-gray-700">
+          <span className="text-3xl text-white/80">Dashboard</span>
         </div>
-    );
-}
+        <div className="p-4">
+          <ul className="space-y-2">
+            <li className="flex items-center p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
+              <MdOutlinePayment />
+              <span className="ml-2">Send Money</span>
+            </li>
+            <li className="flex items-center p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
+              <IoCashOutline />
+              <span className="ml-2">Cash Out</span>
+            </li>
+            <li className="flex items-center p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
+              <TbCoinTakaFilled />
+              <span className="ml-2">Cash In</span>
+            </li>
+            <li className="flex items-center p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
+              <FaReceipt />
+              <span className="ml-2">Transaction History</span>
+            </li>
+            <li className="flex items-center p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
+              <AiOutlineSetting className="text-lg" />
+              <span className="ml-2">Setting</span>
+            </li>
+            <li className="flex items-center p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center text-left"
+              >
+                <IoLogOut className="mr-2" /> Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      </motion.div>
+
+      {/* Main content */}
+      <div className="flex flex-col flex-1 p-6">
+        {/* Navbar */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold">Welcome, Naimur</h1>
+          <div className="flex items-center space-x-4">
+            <FiSearch className="text-xl" />
+            <FiBell className="text-xl" />
+            <FiUser className="text-xl" />
+          </div>
+        </div>
+
+        {/* Main widgets */}
+        <div className="grid grid-cols-1 gap-4 mt-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="p-6 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg shadow"
+          >
+            <h2 className="text-4xl font-semibold">My Balance</h2>
+            <div className="flex items-center justify-between">
+              <div className="w-20">
+                {" "}
+                {showBalance && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="mt-4 text-2xl"
+                  >
+                    ${balance}
+                  </motion.p>
+                )}
+              </div>
+              <button
+                className="mt-2 bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-900 transition duration-300"
+                onClick={handleShowBalance}
+              >
+                Show Balance
+              </button>
+            </div>
+          </motion.div>
+
+          {/* <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="p-4 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-lg shadow"
+          >
+            <h2 className="text-lg font-semibold">Send Money</h2>
+            <Link to="/send-money" className="mt-2 text-white hover:underline">
+              Go to Send Money
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="p-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg shadow"
+          >
+            <h2 className="text-lg font-semibold">Cashout</h2>
+            <Link to="/cashout" className="mt-2 text-white hover:underline">
+              Go to Cashout
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg shadow"
+          >
+            <h2 className="text-lg font-semibold">Cashin</h2>
+            <Link to="/cashin" className="mt-2 text-white hover:underline">
+              Go to Cashin
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="p-4 bg-gradient-to-r from-yellow-500 to-green-500 text-white rounded-lg shadow"
+          >
+            <h2 className="text-lg font-semibold">Transaction History</h2>
+            <Link
+              to="/transaction-history"
+              className="mt-2 text-white hover:underline"
+            >
+              Go to Transaction History
+            </Link>
+          </motion.div> */}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;

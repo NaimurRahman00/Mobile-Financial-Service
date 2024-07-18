@@ -10,6 +10,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("user"); // Default role
   const [message, setMessage] = useState("");
+  const [balance, setBalance] = useState(0);
 
   const queryClient = useQueryClient();
 
@@ -69,6 +70,7 @@ const RegisterForm = () => {
         pin,
         mobileNumber,
         email,
+        balance,
         role,
         status: "pending",
       }); // Include role and status
